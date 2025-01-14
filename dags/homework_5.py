@@ -1,28 +1,25 @@
-from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from sqlalchemy import create_engine, text
-import pandas as pd
+from datetime import timedelta, datetime
 from airflow.utils.dates import days_ago
+from airflow.operators.python import PythonOperator
+from clickhouse_driver import Client
+from airflow.hooks.base import BaseHook
+import pandas as pd
 import requests
 from airflow.exceptions import AirflowException
-from sqlalchemy import Table, Column, Integer, String, MetaData, VARCHAR
 
-default_args = {
-    'owner': '@max',
-    'depends_on_past': False,
-    'start_date': days_ago(1),
-    'schedule_interval': None,
-}
+# Настройка подключения к базе данных ClickHouse
+HOST = BaseHook.get_connection("clickhouse_default").host
+USER = BaseHook.get_connection("clickhouse_default").login
+PASSWORD = BaseHook.get_connection("clickhouse_default").password
+DATABASE = BaseHook.get_connection("clickhouse_default").schema
 
-conn = BaseHook.get_connection('psql_connection')
-HOST = conn.host
-USER = conn.login
-SCHEMA = conn.schema
-PASSWORD = conn.password
-PORT = conn.port
-
-PS_CLIENT = create_engine(f'postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{SCHEMA}')
+CH_CLIENT = Client(
+    host=HOST,  # IP-адрес сервера ClickHouse
+    user=USER,  # Имя пользователя для подключения
+    password=PASSWORD,  # Пароль для подключения
+    database=DATABASE  # База данных, к которой подключаемся
+)
 
 # Создадим объект класса DAG
 dag = DAG('test_xcom_saf', schedule_interval='@daily', start_date=datetime(2024, 1, 1), end_date=datetime(2024, 1, 4),
@@ -52,35 +49,21 @@ def fetch_data_to_xcom(api_url, **kwargs):
 
 
 # Функция для загрузки данных в ClickHouse из CSV
-def upload_to_postgres(url, table_name, engine, **kwargs):
-    metabata_obj = MetaData()
-
-    workers_table = Table(f'{table_name}',
-                          metabata_obj,
-                          Column('campaign', String, ),
-                          Column('cost', Integer),
-                          Column('date', String)
-                          )
-
+def upload_to_clickhouse(url, table_name, client, **kwargs):
     # Получаем разницу в файлах сегодня и вчера
     task_instance = kwargs['task_instance']
     files = task_instance.xcom_pull(key='file_difference')
+
     # Создание таблицы, ЕСЛИ НЕ СУЩЕСТВУЕТ ТО СОЗДАТЬ ТАБЛИЦУ
-    metabata_obj.drop_all(engine)
-    metabata_obj.create_all(engine)
+    client.execute(f'CREATE TABLE IF NOT EXISTS {table_name} (campaign String, cost Int64, date  String) ENGINE Log')
 
     # Итеративно проходимся по файлам и добавляем в ClickHouse
     for file in files:
         # Чтение данных из CSV
         data_frame = pd.read_csv(url + file)
 
-        # Запись data frame в Postgres
-        data_frame.to_sql(
-            name=workers_table,  # имя таблицы
-            con=engine,  # движок
-            if_exists="append",  # если таблица уже существует, добавляем
-            index=False  # без индекса
-        )
+        # Запись data frame в ClickHouse
+        client.execute(f'INSERT INTO {table_name} VALUES', data_frame.to_dict('records'))
 
 
 fetch_data_to_xcom = PythonOperator(
@@ -91,11 +74,11 @@ fetch_data_to_xcom = PythonOperator(
 )
 
 # Задачи для загрузки данных
-upload_to_postgres = PythonOperator(
+upload_to_clickhouse = PythonOperator(
     task_id='upload_to_clickhouse',
-    python_callable=upload_to_postgres,
-    op_args=['http://158.160.116.58:4009/download/', 'campaign_table', PS_CLIENT],
+    python_callable=upload_to_clickhouse,
+    op_args=['http://158.160.116.58:4009/download/', 'campaign_table_saf', CH_CLIENT],
     dag=dag,
 )
 
-fetch_data_to_xcom >> upload_to_postgres
+fetch_data_to_xcom >> upload_to_clickhouse
