@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="852ec664-9314-4662-8811-7ead3c25e6d0" name="Changes" comment="home_work3 and 4">
-      <change afterPath="$PROJECT_DIR$/dags/homework_5.py" afterDir="false" />
+    <list default="true" id="852ec664-9314-4662-8811-7ead3c25e6d0" name="Changes" comment="dag_commit_1">
+      <change afterPath="$PROJECT_DIR$/dags/homework_6.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dags/dag1.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/dag1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dags/homework_4.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/homework_4.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736709066248</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="dag_commit_1">
+      <option name="closed" value="true" />
+      <created>1736889148847</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1736889148848</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -136,6 +145,7 @@
     <MESSAGE value="1" />
     <MESSAGE value="home_work2" />
     <MESSAGE value="home_work3 and 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="home_work3 and 4" />
+    <MESSAGE value="dag_commit_1" />
+    <option name="LAST_COMMIT_MESSAGE" value="dag_commit_1" />
   </component>
 </project>

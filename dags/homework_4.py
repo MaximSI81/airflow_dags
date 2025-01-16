@@ -95,3 +95,4 @@ upload_task = PythonOperator(
 
 # Определение зависимостей между задачами
 extract_task >> transform_task >> upload_task
+

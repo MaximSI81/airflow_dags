@@ -1,9 +1,11 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+
 from sqlalchemy import create_engine, text
 import pandas as pd
 from airflow.utils.dates import days_ago
+
 import requests
 from airflow.exceptions import AirflowException
 from sqlalchemy import Table, Column, Integer, String, MetaData, VARCHAR
@@ -53,21 +55,18 @@ def fetch_data_to_xcom(api_url, **kwargs):
 
 # Функция для загрузки данных в ClickHouse из CSV
 def upload_to_postgres(url, table_name, engine, **kwargs):
-    metabata_obj = MetaData()
-
-    workers_table = Table(f'{table_name}',
-                          metabata_obj,
-                          Column('campaign', String, ),
-                          Column('cost', Integer),
-                          Column('date', String)
-                          )
+    metabata = MetaData()
+    campaign_table = Table('campaign_table', metabata,
+                           Column('campaign', String),
+                           Column('cost', Integer),
+                           Column('date', String))
 
     # Получаем разницу в файлах сегодня и вчера
     task_instance = kwargs['task_instance']
     files = task_instance.xcom_pull(key='file_difference')
     # Создание таблицы, ЕСЛИ НЕ СУЩЕСТВУЕТ ТО СОЗДАТЬ ТАБЛИЦУ
-    metabata_obj.drop_all(engine)
-    metabata_obj.create_all(engine)
+    metabata.drop_all(engine)
+    metabata.create_all(engine)
 
     # Итеративно проходимся по файлам и добавляем в ClickHouse
     for file in files:
@@ -92,7 +91,7 @@ fetch_data_to_xcom = PythonOperator(
 
 # Задачи для загрузки данных
 upload_to_postgres = PythonOperator(
-    task_id='upload_to_clickhouse',
+    task_id='upload_to_postgres',
     python_callable=upload_to_postgres,
     op_args=['http://158.160.116.58:4009/download/', 'campaign_table', PS_CLIENT],
     dag=dag,
