@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-
+from airflow.hooks.base_hook import BaseHook
 from sqlalchemy import create_engine, text
 import pandas as pd
 from airflow.utils.dates import days_ago
