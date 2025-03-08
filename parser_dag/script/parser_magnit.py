@@ -50,7 +50,9 @@ class ParserProducts:
                                                                class_='product-details-parameters-list__item'):
                                             t = tags.find_all('span', class_='pl-text')
                                             l.append(t[0].text + ' ' + t[1].text)
-                                        l.append('price' + ' ' + s.find('span', class_='pl-text product-details-price__current').text)
+                                        l.append('Название' + ' ' + s.find('span', itemprop='name').text)
+                                        l.append('price' + ' ' + s.find('span',
+                                                                        class_='pl-text product-details-price__current').text)
                                         l.append('date_price' + ' ' + str(pd.to_datetime('today').normalize()))
                                         self.products.append(l)
 

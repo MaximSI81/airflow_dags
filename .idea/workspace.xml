@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="852ec664-9314-4662-8811-7ead3c25e6d0" name="Changes" comment="Задача на custom operator">
-      <change afterPath="$PROJECT_DIR$/dags/homeword_12.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dags/homeword_last.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/parser_dag/dag/my_dag.py" afterDir="false" />
+    <list default="true" id="852ec664-9314-4662-8811-7ead3c25e6d0" name="Changes" comment="parser_m">
+      <change afterPath="$PROJECT_DIR$/parser_dag/dag/dag_2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dags/dag1.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/dag1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser_dag/dag/my_dag.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser_dag/dag/my_dag.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser_dag/script/parser_dixi.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser_dag/script/parser_dixi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parser_dag/script/parser_magnit.py" beforeDir="false" afterPath="$PROJECT_DIR$/parser_dag/script/parser_magnit.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,11 +50,41 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python.dag1.executor&quot;: &quot;Run&quot;,
+    &quot;Python.parser_magnit.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="parser_magnit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="airflow_dags" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parser_dag/script" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/parser_dag/script/parser_magnit.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.parser_magnit" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -151,7 +181,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737312288819</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="my_dag">
+      <option name="closed" value="true" />
+      <created>1738958939049</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738958939049</updated>
+    </task>
+    <task id="LOCAL-00012" summary="parser_m">
+      <option name="closed" value="true" />
+      <created>1738959997683</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1738959997683</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,6 +219,8 @@
     <MESSAGE value="dag_commit_1" />
     <MESSAGE value="Задача на ClickHouseOperator" />
     <MESSAGE value="Задача на custom operator" />
-    <option name="LAST_COMMIT_MESSAGE" value="Задача на custom operator" />
+    <MESSAGE value="my_dag" />
+    <MESSAGE value="parser_m" />
+    <option name="LAST_COMMIT_MESSAGE" value="parser_m" />
   </component>
 </project>

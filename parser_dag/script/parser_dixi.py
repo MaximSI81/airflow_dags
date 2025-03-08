@@ -11,7 +11,7 @@ from selenium.common.exceptions import (ElementNotInteractableException, Element
 import csv
 import random
 from selenium import webdriver
-from seleniumwire import webdriver
+#from seleniumwire import webdriver
 import pandas as pd
 
 
@@ -118,18 +118,5 @@ class ParserDixi:
                     self.prod_inf.append(l)
 
 
-prod = ['molochnye-produkty-yaytsa/', 'konditerskie-izdeliya-torty/', 'ovoshchi-frukty/', 'khleb-i-vypechka/', 'myaso-ptitsa/', 'myasnaya-gastronomiya/', 'chay-kofe-kakao/']
-url = 'https://dixy.ru/catalog/'
-
-data = []
-
-for p in prod:
-    PD = ParserDixi(url, [p])
-    PD.get_prod()
-    data += PD.prod_inf
-with open('products.csv', 'w', encoding='utf-8', newline='') as f:
-    writer = csv.writer(f)
-    for row in data:  # запись строк
-        writer.writerow(row)
 
 
